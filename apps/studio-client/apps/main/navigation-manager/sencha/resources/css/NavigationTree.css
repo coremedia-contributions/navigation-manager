@@ -1,0 +1,18 @@
+.navigation-manager {
+}
+
+.navigation-manager .x-window-body {
+  background-color: #e9f3f7;
+}
+
+.navigation-tree .x-grid-body {
+  background-color: #fff;
+}
+
+.hidden-in-navigation .x-tree-node-text {
+  color: #828282;
+}
+
+.hidden-in-navigation .x-tree-icon {
+  color: #828282;
+}
