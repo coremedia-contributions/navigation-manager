@@ -15,7 +15,7 @@ module.exports = jangarooConfig({
     studioPlugins: [
       {
         mainClass: "com.coremedia.blueprint.studio.navigationtree.NavigationTreeStudioPlugin",
-        name: "Navigation Tree",
+        name: "Navigation Manager",
       },
     ],
   },
@@ -25,12 +25,12 @@ module.exports = jangarooConfig({
       cmCategoryIcons: {
         Innovation: [
           {
-            src: "packages/com.coremedia.blueprint__navigation-tree-studio/appIcons/innovation_24.svg",
+            src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/innovation_24.svg",
             sizes: "24x24",
             type: "image/svg",
           },
           {
-            src: "packages/com.coremedia.blueprint__navigation-tree-studio/appIcons/innovation_192.png",
+            src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/innovation_192.png",
             sizes: "192x192",
             type: "image/png",
           },
