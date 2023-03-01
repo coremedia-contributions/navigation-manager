@@ -3,11 +3,15 @@
 
 # Navigation Manager
 
-### Installation
+This Studio Client extension enables the editor to easily view and and manage the navigation of the preferred site.
+
+![Navigation Manager](docs/images/navigation-manager.png)
+
+## Installation
 
 - From the project's root folder, clone this repository as a submodule of the extensions folder. Make sure to use the branch name that matches your workspace version. 
 ```
-git submodule add <repository url>
+git submodule add https://github.com/coremedia-contributions/navigation-manager.git 
 ```
 
 - Use the extension tool in the root folder of the project to link the modules to your workspace.
