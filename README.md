@@ -3,7 +3,7 @@
 
 # Navigation Manager
 
-This Studio Client extension enables the editor to easily view and and manage the navigation of the preferred site.
+This Studio Client extension enables the editor to easily view and manage the navigation of the preferred site.
 
 ![Navigation Manager](docs/images/navigation-manager.png)
 
