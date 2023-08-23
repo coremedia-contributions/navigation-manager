@@ -35,6 +35,7 @@ interface NavigationTreeLabels_properties {
    */
   navigation_column_header: string;
   title_column_header: string;
+  segment_column_header: string;
   validFrom_column_header: string;
   validTo_column_header: string;
 
@@ -52,6 +53,7 @@ const NavigationTreeLabels_properties: NavigationTreeLabels_properties = {
   toolbar_filter_field_emptyText: "Type here to filter",
   navigation_column_header: "Navigation",
   title_column_header: "Title",
+  segment_column_header: "Segment",
   validFrom_column_header: "Valid from",
   validTo_column_header: "Valid to",
   Navigation_root_suffix: "Navigation",

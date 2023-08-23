@@ -31,6 +31,7 @@ import NavigationTreeBase from "./NavigationTreeBase";
 import StatusColumn from "./StatusColumn";
 import TitleColumn from "./TitleColumn";
 import ValidityDateColumn from "./ValidityDateColumn";
+import SegmentColumn from "./SegmentColumn";
 
 interface NavigationTreeConfig extends Config<NavigationTreeBase> {
 }
@@ -94,9 +95,10 @@ class NavigationTree extends NavigationTreeBase {
         Config(TreeColumn, {
           text: NavigationTreeLabels_properties.navigation_column_header,
           dataIndex: "text",
-          flex: 1,
+          flex: 2,
         }),
         Config(TitleColumn),
+        Config(SegmentColumn),
         Config(ValidityDateColumn, { mode: "from" }),
         Config(ValidityDateColumn, { mode: "to" }),
         Config(StatusColumn),
