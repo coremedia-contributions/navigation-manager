@@ -117,6 +117,11 @@ class NavigationTree extends NavigationTreeBase {
         ui: ToolbarSkin.FIELD.getSkin(),
         items: [
           Config(IconButton, {
+            itemId: "addPageButton",
+            baseAction: new OpenCreateFromTemplateDialogAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
+          }),
+          Config(TbSeparator),
+          Config(IconButton, {
             itemId: NavigationTree.OPEN_DOCUMENT_BUTTON_ITEM_ID,
             tooltip: NavigationTreeLabels_properties.Navigation_action_show_in_tab,
             baseAction: new OpenInTabAction({
