@@ -2,7 +2,6 @@ import CMChannelForm from "@coremedia-blueprint/studio-client.main.blueprint-for
 import ECommerceStudioPlugin from "@coremedia-blueprint/studio-client.main.ec-studio/ECommerceStudioPlugin";
 import CommerceChildCategoriesForm from "@coremedia-blueprint/studio-client.main.lc-studio/desktop/CommerceChildCategoriesForm";
 import CMExternalPageForm from "@coremedia-blueprint/studio-client.main.lc-studio/forms/CMExternalPageForm";
-import StudioAppsImpl from "@coremedia/studio-client.app-context-models/apps/StudioAppsImpl";
 import studioApps from "@coremedia/studio-client.app-context-models/apps/studioApps";
 import OpenDialogAction from "@coremedia/studio-client.ext.ui-components/actions/OpenDialogAction";
 import AddItemsPlugin from "@coremedia/studio-client.ext.ui-components/plugins/AddItemsPlugin";
@@ -14,7 +13,6 @@ import IEditorContext from "@coremedia/studio-client.main.editor-components/sdk/
 import PreviewContextMenu from "@coremedia/studio-client.main.editor-components/sdk/preview/PreviewContextMenu";
 import Component from "@jangaroo/ext-ts/Component";
 import Separator from "@jangaroo/ext-ts/toolbar/Separator";
-import { cast } from "@jangaroo/runtime";
 import Config from "@jangaroo/runtime/Config";
 import ConfigUtils from "@jangaroo/runtime/ConfigUtils";
 import resourceManager from "@jangaroo/runtime/l10n/resourceManager";
@@ -33,7 +31,7 @@ class NavigationTreeStudioPlugin extends StudioPlugin {
   override init(editorContext: IEditorContext): void {
     super.init(editorContext);
 
-    cast(StudioAppsImpl, studioApps._).getSubAppLauncherRegistry().registerSubAppLauncher("cmNavigationEditor", (): void => {
+    studioApps._.getShortcutRunnerRegistry().registerShortcutRunner({ cmKey: "cmNavigationEditor" }, (): void => {
       const openDialogAction = new OpenDialogAction({ dialog: Config(NavigationManager) });
       openDialogAction.addComponent(new Component({}));
       openDialogAction.execute();
