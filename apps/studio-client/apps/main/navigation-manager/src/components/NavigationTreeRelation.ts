@@ -17,7 +17,6 @@ import AbstractTreeModelBase from "./AbstractTreeModelBase";
 import NavigationTreeModel from "./NavigationTreeModel";
 
 class NavigationTreeRelation implements ContentTreeRelation {
-
   static readonly CHANNEL_TYPE: string = "CMChannel";
 
   static readonly COLLECTION_TYPE: string = "CMCollection";
@@ -41,7 +40,9 @@ class NavigationTreeRelation implements ContentTreeRelation {
   #toggleViewCallback: AnyFunction = null;
 
   constructor() {
-    let showHiddenItems: boolean = editorContext._.getPreferences().get(ShowHiddenItemsAction.VIEW_TREE_SETTINGS_HIDDEN);
+    let showHiddenItems: boolean = editorContext._.getPreferences().get(
+      ShowHiddenItemsAction.VIEW_TREE_SETTINGS_HIDDEN,
+    );
     if (showHiddenItems === undefined) {
       showHiddenItems = false;
     }
@@ -69,7 +70,10 @@ class NavigationTreeRelation implements ContentTreeRelation {
   }
 
   isFolderNode(content: Content): boolean {
-    return content.getType().isSubtypeOf(NavigationTreeRelation.#getFolderTypeChannel()) || content.getType().isSubtypeOf(NavigationTreeRelation.#getFolderTypeCollection());
+    return (
+      content.getType().isSubtypeOf(NavigationTreeRelation.#getFolderTypeChannel()) ||
+      content.getType().isSubtypeOf(NavigationTreeRelation.#getFolderTypeCollection())
+    );
   }
 
   getSubFolders(content: Content): Array<any> {
@@ -110,7 +114,10 @@ class NavigationTreeRelation implements ContentTreeRelation {
   }
 
   getParents(content: Content): Array<any> {
-    const refs = content.getReferrersWithNamedDescriptor(NavigationTreeRelation.CHANNEL_TYPE, NavigationTreeRelation.CHILDREN_PROPERTY);
+    const refs = content.getReferrersWithNamedDescriptor(
+      NavigationTreeRelation.CHANNEL_TYPE,
+      NavigationTreeRelation.CHILDREN_PROPERTY,
+    );
     if (refs === undefined) {
       return undefined;
     }
@@ -136,7 +143,6 @@ class NavigationTreeRelation implements ContentTreeRelation {
       return false;
     }
     if (contentType.getName() === NavigationTreeRelation.CHANNEL_TYPE) {
-
     }
 
     return false;
@@ -151,18 +157,15 @@ class NavigationTreeRelation implements ContentTreeRelation {
     return true;
   }
 
-  move(contents: Array<any>, newParent: Content, callback?: AnyFunction): void {
-  }
+  move(contents: Array<any>, newParent: Content, callback?: AnyFunction): void {}
 
   mayMove(contents: Array<any>, newParent: Content): boolean {
     return true;
   }
 
-  deleteContents(contents: Array<any>, callback?: AnyFunction): void {
-  }
+  deleteContents(contents: Array<any>, callback?: AnyFunction): void {}
 
-  undeleteContents(contents: Array<any>, callback?: AnyFunction): void {
-  }
+  undeleteContents(contents: Array<any>, callback?: AnyFunction): void {}
 
   mayDelete(contents: Array<any>): boolean {
     return true;
@@ -170,7 +173,11 @@ class NavigationTreeRelation implements ContentTreeRelation {
 
   showCheckoutError(target: Content): void {
     const docType = ContentLocalizationUtil.localizeDocumentTypeName(target.getType().getName());
-    const msg = StringUtil.format(NavigationTreeLabels_properties.navigation_checkout_error_message, docType, target.getName());
+    const msg = StringUtil.format(
+      NavigationTreeLabels_properties.navigation_checkout_error_message,
+      docType,
+      target.getName(),
+    );
     MessageBoxWindow.getInstance().alert(NavigationTreeLabels_properties.navigation_checkout_error_title, msg);
   }
 
@@ -189,7 +196,12 @@ class NavigationTreeRelation implements ContentTreeRelation {
     return childType === NavigationTreeRelation.CHANNEL_TYPE;
   }
 
-  provideRepositoryFolderFor(contentType: ContentType, folderNode: Content, childNodeName: string, callback: AnyFunction): void {
+  provideRepositoryFolderFor(
+    contentType: ContentType,
+    folderNode: Content,
+    childNodeName: string,
+    callback: AnyFunction,
+  ): void {
     callback(folderNode.getParent());
   }
 
@@ -199,7 +211,14 @@ class NavigationTreeRelation implements ContentTreeRelation {
 
   withdraw(contents: Array<any>, publicationService: PublicationService, callback: AnyFunction): void {
     const repository = session._.getConnection().getContentRepository();
-    repository.getPublicationService().withdrawAllFromTree(contents, NavigationTreeRelation.CHANNEL_TYPE, NavigationTreeRelation.CHILDREN_PROPERTY, callback);
+    repository
+      .getPublicationService()
+      .withdrawAllFromTree(
+        contents,
+        NavigationTreeRelation.CHANNEL_TYPE,
+        NavigationTreeRelation.CHILDREN_PROPERTY,
+        callback,
+      );
   }
 
   showInTree(contents: Array<any>, view: string = null, treeModelId: string = null): void {
@@ -211,13 +230,18 @@ class NavigationTreeRelation implements ContentTreeRelation {
         return;
       }
 
-      const ve = ValueExpressionFactory.createFromFunction((entity: any): boolean =>
-        NavigationTreeRelation.#tryShowInNavigationTree(entity)
-      , entity);
+      const ve = ValueExpressionFactory.createFromFunction(
+        (entity: any): boolean => NavigationTreeRelation.#tryShowInNavigationTree(entity),
+        entity,
+      );
       ve.loadValue((): void => {
         const canShowInNavigationTree: boolean = ve.getValue();
         if (canShowInNavigationTree) {
-          editorContext._.getCollectionViewManager().showInRepository(cast(Content, entity), null, NavigationTreeModel.NAVIGATION_TREE_ID);
+          editorContext._.getCollectionViewManager().showInRepository(
+            cast(Content, entity),
+            null,
+            NavigationTreeModel.NAVIGATION_TREE_ID,
+          );
         } else {
           editorContext._.getCollectionViewManager().showInRepository(cast(Content, entity), null, treeModelId);
         }
@@ -256,21 +280,19 @@ class NavigationTreeRelation implements ContentTreeRelation {
   getChildrenFor(folder: Content): Array<any> {
     const children: Array<any> = folder.getProperties().get(NavigationTreeRelation.getChildrenPropertyName(folder));
     if (children) {
-      return children.filter((item: Content): boolean =>
-        !item.isDeleted(),
-      );
+      return children.filter((item: Content): boolean => !item.isDeleted());
     }
     return [];
   }
 
   protected static getChildrenPropertyName(content: Content): string {
     switch (content.getType().getName()) {
-    case NavigationTreeRelation.COLLECTION_TYPE:
-      return NavigationTreeRelation.ITEMS_PROPERTY;
-    case NavigationTreeRelation.SITE_INDICATOR_TYPE:
-      return NavigationTreeRelation.ROOT_PROPERTY;
-    default:
-      return NavigationTreeRelation.CHILDREN_PROPERTY;
+      case NavigationTreeRelation.COLLECTION_TYPE:
+        return NavigationTreeRelation.ITEMS_PROPERTY;
+      case NavigationTreeRelation.SITE_INDICATOR_TYPE:
+        return NavigationTreeRelation.ROOT_PROPERTY;
+      default:
+        return NavigationTreeRelation.CHILDREN_PROPERTY;
     }
   }
 }

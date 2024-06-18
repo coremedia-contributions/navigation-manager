@@ -7,8 +7,7 @@ import Config from "@jangaroo/runtime/Config";
 import NavigationTreeLabels_properties from "../NavigationTreeLabels_properties";
 import NavigationManager from "../components/NavigationManager";
 
-interface PDEOpenNavigationTreeActionConfig extends Config<MetadataBeanAction> {
-}
+interface PDEOpenNavigationTreeActionConfig extends Config<MetadataBeanAction> {}
 
 class PDEOpenNavigationTreeAction extends MetadataBeanAction {
   declare Config: PDEOpenNavigationTreeActionConfig;

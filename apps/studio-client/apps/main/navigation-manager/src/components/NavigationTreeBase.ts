@@ -22,7 +22,7 @@ import NavigationTree from "./NavigationTree";
 import NavigationTreeModel from "./NavigationTreeModel";
 
 interface NavigationTreeBaseConfig extends Config<TreePanel> {
-  listeners?: Events<TreePanel> & Events<TreeViewDragDropPlugin> & Events<CellEditingPlugin>,
+  listeners?: Events<TreePanel> & Events<TreeViewDragDropPlugin> & Events<CellEditingPlugin>;
 }
 
 class NavigationTreeBase extends TreePanel {
@@ -45,12 +45,26 @@ class NavigationTreeBase extends TreePanel {
     this.#treeSelectionModel.addListener("selectionchange", bind(this, this.#treeSelectionChanged));
 
     // this.getNavigationTreeModel().getTreeRelation().setToggleViewCallback(bind(this, this.expandAll));
-    this.mon(this, "beforecelldblclick", (this_: TableView, td: HTMLElement, cellIndex: number, record: any, tr: HTMLElement, rowIndex: number, e: ExtEvent & { position?: CellContext }): any => {
-      editorContext._.getContentTabManager().openDocument(as(this.#navigationTreeModel.getNodeModel(NavigationIdHelper.parseContentId(record.id)), Content));
-      return false;
-    });
+    this.mon(
+      this,
+      "beforecelldblclick",
+      (
+        this_: TableView,
+        td: HTMLElement,
+        cellIndex: number,
+        record: any,
+        tr: HTMLElement,
+        rowIndex: number,
+        e: ExtEvent & { position?: CellContext },
+      ): any => {
+        editorContext._.getContentTabManager().openDocument(
+          as(this.#navigationTreeModel.getNodeModel(NavigationIdHelper.parseContentId(record.id)), Content),
+        );
+        return false;
+      },
+    );
 
-    this.mon(this, "afterrender", function(): void {
+    this.mon(this, "afterrender", function (): void {
       const store: any = this.getStore();
       store.filterer = "bottomup";
 
@@ -63,26 +77,27 @@ class NavigationTreeBase extends TreePanel {
           child.expand();
         });
       });
-
     });
 
     this.on("drop", bind(this, this.#handleNodeDrop));
     this.on("beforedrop", bind(this, this.#validateDrop));
   }
 
-  #validateDrop(node: HTMLElement,
-    data: { copy?: boolean, view?: TreeView, ddel?: HTMLElement, item?: HTMLElement, records?: TreeModel[] },
+  #validateDrop(
+    node: HTMLElement,
+    data: { copy?: boolean; view?: TreeView; ddel?: HTMLElement; item?: HTMLElement; records?: TreeModel[] },
     overModel: TreeModel,
     dropPosition: string,
-    dropHandlers: { wait?: boolean, processDrop?: AnyFunction, cancelDrop?: AnyFunction }): any {
+    dropHandlers: { wait?: boolean; processDrop?: AnyFunction; cancelDrop?: AnyFunction },
+  ): any {
     dropHandlers.wait = true;
 
     let dropValid: boolean = true;
     if (!overModel) {
       dropValid = false;
     } else {
-      data.records.forEach(r => {
-        const path = r.getPath("id", "|");
+      data.records.forEach((r) => {
+        //  const path = r.getPath("id", "|");
         if (r.isRoot()) {
           dropValid = false;
         }
@@ -94,14 +109,14 @@ class NavigationTreeBase extends TreePanel {
     } else {
       dropHandlers.cancelDrop();
     }
-
   }
 
-  #handleNodeDrop(node: HTMLElement,
-    data: { copy?: boolean, view?: TreeView, ddel?: HTMLElement, item?: HTMLElement, records?: TreeModel[] },
+  #handleNodeDrop(
+    node: HTMLElement,
+    data: { copy?: boolean; view?: TreeView; ddel?: HTMLElement; item?: HTMLElement; records?: TreeModel[] },
     overModel: TreeModel,
-    dropPosition: string): void {
-
+    dropPosition: string,
+  ): void {
     const movedRecords: TreeModel[] = data.records;
     const newParentNode: any = overModel.parentNode;
 
@@ -131,7 +146,7 @@ class NavigationTreeBase extends TreePanel {
         insertAtIndex = 0;
       }
 
-      oldParentChildren = oldParentChildren.filter(child => moveContent !== child);
+      oldParentChildren = oldParentChildren.filter((child) => moveContent !== child);
       if (oldParent === newParent) {
         newParentChildren = oldParentChildren;
         insertAtIndex = newParentChildren.indexOf(overContent) + (dropPosition === "before" ? -1 : 1);
@@ -151,10 +166,8 @@ class NavigationTreeBase extends TreePanel {
       // modify the parent child list
       newParentChildren.splice(insertAtIndex, 0, moveContent);
       newParent.getProperties().set("children", newParentChildren);
-
     });
-
-  };
+  }
 
   protected getNavigationTreeModel(): NavigationTreeModel {
     if (!this.#navigationTreeModel) {
@@ -165,7 +178,9 @@ class NavigationTreeBase extends TreePanel {
 
   protected getRootNavigationValueExpression(): ValueExpression {
     if (!this.#rootNavigationValueExpression) {
-      this.#rootNavigationValueExpression = ValueExpressionFactory.createFromFunction(AbstractTreeModelBase.getNavigationRoot);
+      this.#rootNavigationValueExpression = ValueExpressionFactory.createFromFunction(
+        AbstractTreeModelBase.getNavigationRoot,
+      );
     }
     return this.#rootNavigationValueExpression;
   }
@@ -188,8 +203,10 @@ class NavigationTreeBase extends TreePanel {
   //noinspection JSUnusedLocalSymbols
   #treeSelectionChanged(selectionModel: SelectionModel, selected: Array<any>): void {
     if (selected.length > 0) {
-      const newNode/*:TreeModel*/ = selected[0];
-      this.#selectedNavigationValueExpression.setValue(this.getNavigationTreeModel().getNodeModel(NavigationIdHelper.parseContentId(newNode.id)));
+      const newNode /*:TreeModel*/ = selected[0];
+      this.#selectedNavigationValueExpression.setValue(
+        this.getNavigationTreeModel().getNodeModel(NavigationIdHelper.parseContentId(newNode.id)),
+      );
     }
   }
 
@@ -200,12 +217,11 @@ class NavigationTreeBase extends TreePanel {
 
       filters.add((item: TreeModel) => {
         const itemText: string = item.get("text");
-        return item.isRoot() || itemText && itemText.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0;
+        return item.isRoot() || (itemText && itemText.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0);
       });
 
       // make sure filter results are visible
       this.expandAll();
-
     } else {
       this.getStore().clearFilter();
     }
@@ -214,7 +230,6 @@ class NavigationTreeBase extends TreePanel {
   #contentForNodeId(nodeId: string): Content {
     return session._.getConnection().getContentRepository().getContent(NavigationIdHelper.parseContentId(nodeId));
   }
-
 }
 
 export default NavigationTreeBase;

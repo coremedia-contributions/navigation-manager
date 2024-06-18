@@ -37,7 +37,10 @@ class NavigationTreeModel extends AbstractTreeModelBase {
       textsByChildId[id] = AbstractTreeModelBase.computeNodeText(child);
       textsClsByChildId[id] = this.getTextCls(NavigationIdHelper.parseContentId(id));
       //Setting the text class on the icon class as well because of CM-product bug CMS-8654.
-      iconsByChildId[id] = this.getIconCls(NavigationIdHelper.parseContentId(id)) + " " + this.getTextCls(NavigationIdHelper.parseContentId(id));
+      iconsByChildId[id] =
+        this.getIconCls(NavigationIdHelper.parseContentId(id)) +
+        " " +
+        this.getTextCls(NavigationIdHelper.parseContentId(id));
     }
     return new NodeChildren(childIds, textsByChildId, iconsByChildId, textsClsByChildId);
   }
@@ -49,7 +52,6 @@ class NavigationTreeModel extends AbstractTreeModelBase {
   override getTreeId(): string {
     return NavigationTreeModel.NAVIGATION_TREE_ID;
   }
-
 }
 
 export default NavigationTreeModel;

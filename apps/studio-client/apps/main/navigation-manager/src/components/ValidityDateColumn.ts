@@ -14,18 +14,26 @@ interface ValidityDateColumnConfig extends Config<GridColumn> {
 }
 
 class ValidityDateColumn extends GridColumn {
-
   declare Config: ValidityDateColumnConfig;
 
   constructor(config: Config<ValidityDateColumn> = null) {
-    super(ConfigUtils.apply(Config(ValidityDateColumn, {
-      mode: config.mode,
-      header: "to" === config.mode ? NavigationTreeLabels_properties.validTo_column_header : NavigationTreeLabels_properties.validFrom_column_header,
-      width: 150,
-      stateId: "to" === config.mode ? "validTo" : "validFrom",
-      dataIndex: "id",
-      renderer: "to" === config.mode ? ValidityDateColumn.validToColRenderer : ValidityDateColumn.validFromColRenderer,
-    }), config));
+    super(
+      ConfigUtils.apply(
+        Config(ValidityDateColumn, {
+          mode: config.mode,
+          header:
+            "to" === config.mode
+              ? NavigationTreeLabels_properties.validTo_column_header
+              : NavigationTreeLabels_properties.validFrom_column_header,
+          width: 150,
+          stateId: "to" === config.mode ? "validTo" : "validFrom",
+          dataIndex: "id",
+          renderer:
+            "to" === config.mode ? ValidityDateColumn.validToColRenderer : ValidityDateColumn.validFromColRenderer,
+        }),
+        config,
+      ),
+    );
   }
 
   static validFromColRenderer(value: any, metaData: any, record: Model): string {
@@ -38,13 +46,15 @@ class ValidityDateColumn extends GridColumn {
 
   static formatValidityDate(id: string, mode: string): string {
     const content = NavigationIdHelper.getContentById(id);
-    const validFromDate: Calendar = mode === "to" ? content.getProperties().get(AbstractTreeModelBase.VALID_TO) : content.getProperties().get(AbstractTreeModelBase.VALID_FROM);
+    const validFromDate: Calendar =
+      mode === "to"
+        ? content.getProperties().get(AbstractTreeModelBase.VALID_TO)
+        : content.getProperties().get(AbstractTreeModelBase.VALID_FROM);
     if (validFromDate) {
       return Format.date(validFromDate.getDate(), BaseModels_properties.dateFormat);
     }
     return "";
   }
-
 }
 
 export default ValidityDateColumn;

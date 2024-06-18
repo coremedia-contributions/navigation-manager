@@ -36,10 +36,10 @@ class AbstractTreeModelBase extends ContentTreeModel {
     }
 
     switch (content.isDeleted()) {
-    case undefined:
-      return undefined;
-    case true:
-      return null;
+      case undefined:
+        return undefined;
+      case true:
+        return null;
     }
 
     const contentTreeRelation: ContentTreeRelation = this.getTreeRelation();

@@ -22,8 +22,7 @@ import OpenNavigationTreeButton from "./components/OpenNavigationTreeButton";
 import AddNavigationTreeActionsToPreviewContextMenuPlugin from "./plugins/AddNavigationTreeActionsToPreviewContextMenuPlugin";
 import AddNavigationTreeButtonToPageFormPlugin from "./plugins/AddNavigationTreeButtonToPageFormPlugin";
 
-interface NavigationTreeStudioPluginConfig extends Config<StudioPlugin> {
-}
+interface NavigationTreeStudioPluginConfig extends Config<StudioPlugin> {}
 
 class NavigationTreeStudioPlugin extends StudioPlugin {
   declare Config: NavigationTreeStudioPluginConfig;
@@ -39,75 +38,60 @@ class NavigationTreeStudioPlugin extends StudioPlugin {
   }
 
   constructor(config: Config<NavigationTreeStudioPlugin> = null) {
-    super(ConfigUtils.apply(Config(NavigationTreeStudioPlugin, {
+    super(
+      ConfigUtils.apply(
+        Config(NavigationTreeStudioPlugin, {
+          rules: [
+            Config(CMChannelForm, {
+              plugins: [Config(AddNavigationTreeButtonToPageFormPlugin)],
+            }),
+            Config(CMExternalPageForm, {
+              plugins: [Config(AddNavigationTreeButtonToPageFormPlugin)],
+            }),
 
-      rules: [
-
-        Config(CMChannelForm, {
-          plugins: [
-            Config(AddNavigationTreeButtonToPageFormPlugin),
-          ],
-        }),
-        Config(CMExternalPageForm, {
-          plugins: [
-            Config(AddNavigationTreeButtonToPageFormPlugin),
-          ],
-        }),
-
-        Config(CommerceChildCategoriesForm, {
-          plugins: [
-            Config(NestedRulesPlugin, {
-              rules: [
-                Config(Component, {
-                  itemId: CommerceChildCategoriesForm.INHERITED_CATEGORIES_ITEM_ID,
-                  plugins: [
-                    Config(AddItemsPlugin, {
-                      recursive: true,
-                      items: [
-                        Config(OpenNavigationTreeButton),
-                        Config(Separator),
-                      ],
-                      before: [
-                        Config(Component, { itemId: ECommerceStudioPlugin.REMOVE_LINK_BUTTON_ITEM_ID }),
+            Config(CommerceChildCategoriesForm, {
+              plugins: [
+                Config(NestedRulesPlugin, {
+                  rules: [
+                    Config(Component, {
+                      itemId: CommerceChildCategoriesForm.INHERITED_CATEGORIES_ITEM_ID,
+                      plugins: [
+                        Config(AddItemsPlugin, {
+                          recursive: true,
+                          items: [Config(OpenNavigationTreeButton), Config(Separator)],
+                          before: [Config(Component, { itemId: ECommerceStudioPlugin.REMOVE_LINK_BUTTON_ITEM_ID })],
+                        }),
                       ],
                     }),
-                  ],
-                }),
-                Config(Component, {
-                  itemId: CommerceChildCategoriesForm.SELECTED_CATEGORIES_ITEM_ID,
-                  plugins: [
-                    Config(AddItemsPlugin, {
-                      recursive: true,
-                      items: [
-                        Config(OpenNavigationTreeButton),
-                        Config(Separator),
-                      ],
-                      before: [
-                        Config(Component, { itemId: ECommerceStudioPlugin.REMOVE_LINK_BUTTON_ITEM_ID }),
+                    Config(Component, {
+                      itemId: CommerceChildCategoriesForm.SELECTED_CATEGORIES_ITEM_ID,
+                      plugins: [
+                        Config(AddItemsPlugin, {
+                          recursive: true,
+                          items: [Config(OpenNavigationTreeButton), Config(Separator)],
+                          before: [Config(Component, { itemId: ECommerceStudioPlugin.REMOVE_LINK_BUTTON_ITEM_ID })],
+                        }),
                       ],
                     }),
                   ],
                 }),
               ],
             }),
+
+            Config(PreviewContextMenu, {
+              plugins: [Config(AddNavigationTreeActionsToPreviewContextMenuPlugin)],
+            }),
+          ],
+          configuration: [
+            new CopyResourceBundleProperties({
+              destination: resourceManager.getResourceBundle(null, Editor_properties),
+              source: resourceManager.getResourceBundle(null, NavigationTreeLabels_properties),
+            }),
           ],
         }),
-
-        Config(PreviewContextMenu, {
-          plugins: [
-            Config(AddNavigationTreeActionsToPreviewContextMenuPlugin),
-          ],
-        }),
-
-      ],
-      configuration: [
-        new CopyResourceBundleProperties({
-          destination: resourceManager.getResourceBundle(null, Editor_properties),
-          source: resourceManager.getResourceBundle(null, NavigationTreeLabels_properties),
-        }),
-      ],
-
-    }), config));
+        config,
+      ),
+    );
   }
 }
 

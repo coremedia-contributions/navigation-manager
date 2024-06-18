@@ -33,8 +33,7 @@ import TitleColumn from "./TitleColumn";
 import ValidityDateColumn from "./ValidityDateColumn";
 import SegmentColumn from "./SegmentColumn";
 
-interface NavigationTreeConfig extends Config<NavigationTreeBase> {
-}
+interface NavigationTreeConfig extends Config<NavigationTreeBase> {}
 
 class NavigationTree extends NavigationTreeBase {
   declare Config: NavigationTreeConfig;
@@ -55,126 +54,139 @@ class NavigationTree extends NavigationTreeBase {
   constructor(config: Config<NavigationTree> = null) {
     // @ts-expect-error Ext JS semantics
     const this$ = this;
-    super(ConfigUtils.apply(Config(NavigationTree, {
-      cls: "navigation-tree",
-      scrollable: true,
-      useArrows: true,
-      rootVisible: false,
+    super(
+      ConfigUtils.apply(
+        Config(NavigationTree, {
+          cls: "navigation-tree",
+          scrollable: true,
+          useArrows: true,
+          rootVisible: false,
 
-      plugins: [
-        Config(BindTreePlugin, {
-          treeModel: this$.getNavigationTreeModel(),
-          expandInitially: false,
-        }),
-        Config(ContextMenuPlugin, {
-          contextMenu: Config(Menu, {
-            plain: true,
+          plugins: [
+            Config(BindTreePlugin, {
+              treeModel: this$.getNavigationTreeModel(),
+              expandInitially: false,
+            }),
+            Config(ContextMenuPlugin, {
+              contextMenu: Config(Menu, {
+                plain: true,
+                plugins: [Config(HideObsoleteSeparatorsPlugin)],
+                items: [
+                  Config(Item, {
+                    itemId: LinkListPropertyField.OPEN_IN_TAB_MENU_ITEM_ID,
+                    baseAction: new OpenInTabAction({
+                      contentValueExpression: this$.getSelectedNavigationValueExpression(),
+                    }),
+                  }),
+                  Config(Item, {
+                    itemId: LinkListPropertyField.SHOW_IN_LIBRARY_MENU_ITEM_ID,
+                    baseAction: new ShowInRepositoryAction({
+                      contentValueExpression: this$.getSelectedNavigationValueExpression(),
+                    }),
+                  }),
+                  Config(ext_menu_Separator, { itemId: "createFromTemplateSeparator" }),
+                  Config(Item, {
+                    itemId: "createFromTemplate",
+                    baseAction: new OpenCreateFromTemplateDialogAction({
+                      contentValueExpression: this$.getSelectedNavigationValueExpression(),
+                    }),
+                  }),
+                ],
+              }),
+            }),
+          ],
+
+          columns: [
+            Config(TreeColumn, {
+              text: NavigationTreeLabels_properties.navigation_column_header,
+              dataIndex: "text",
+              flex: 2,
+            }),
+            Config(TitleColumn),
+            Config(SegmentColumn),
+            Config(ValidityDateColumn, { mode: "from" }),
+            Config(ValidityDateColumn, { mode: "to" }),
+            Config(StatusColumn),
+          ],
+
+          viewConfig: Config(TreeView, {
             plugins: [
-              Config(HideObsoleteSeparatorsPlugin),
+              Config(TreeViewDragDropPlugin, {
+                containerScroll: true,
+                allowCopy: false,
+              }),
             ],
+          }),
+
+          tbar: Config(Toolbar, {
+            ui: ToolbarSkin.FIELD.getSkin(),
             items: [
-              Config(Item, {
-                itemId: LinkListPropertyField.OPEN_IN_TAB_MENU_ITEM_ID,
-                baseAction: new OpenInTabAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
+              Config(IconButton, {
+                itemId: "addPageButton",
+                baseAction: new OpenCreateFromTemplateDialogAction({
+                  contentValueExpression: this$.getSelectedNavigationValueExpression(),
+                }),
               }),
-              Config(Item, {
-                itemId: LinkListPropertyField.SHOW_IN_LIBRARY_MENU_ITEM_ID,
-                baseAction: new ShowInRepositoryAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
+              Config(TbSeparator),
+              Config(IconButton, {
+                itemId: NavigationTree.OPEN_DOCUMENT_BUTTON_ITEM_ID,
+                tooltip: NavigationTreeLabels_properties.Navigation_action_show_in_tab,
+                baseAction: new OpenInTabAction({
+                  contentValueExpression: this$.getSelectedNavigationValueExpression(),
+                  actionId: "",
+                }),
               }),
-              Config(ext_menu_Separator, { itemId: "createFromTemplateSeparator" }),
-              Config(Item, {
-                itemId: "createFromTemplate",
-                baseAction: new OpenCreateFromTemplateDialogAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
+              Config(IconButton, {
+                itemId: NavigationTree.OPEN_FOLDER_BUTTON_ITEM_ID,
+                iconCls: LocalizationManager_properties.Action_openSiteInRepository_icon,
+                tooltip: NavigationTreeLabels_properties.Navigation_action_show_in_library,
+                baseAction: new ShowInRepositoryAction({
+                  contentValueExpression: this$.getSelectedNavigationValueExpression(),
+                }),
+              }),
+              Config(TbSeparator),
+              Config(TextField, {
+                emptyText: NavigationTreeLabels_properties.toolbar_filter_field_emptyText,
+                width: 150,
+                margin: "0 5",
+                plugins: [
+                  Config(BindPropertyPlugin, {
+                    bindTo: this$.getFilterExpression(),
+                    bidirectional: true,
+                  }),
+                ],
+              }),
+              Config(TbFill),
+              Config(IconButton, {
+                itemId: NavigationTree.SHOW_HIDDEN_ITEM_ID,
+                iconCls: CoreIcons_properties.view_menu,
+                tooltip: NavigationTreeLabels_properties.Navigation_action_toggle_hidden_items,
+                text: NavigationTreeLabels_properties.Navigation_action_hide_items,
+                enableToggle: true,
+                baseAction: new ShowHiddenItemsAction({
+                  contentValueExpression: this$.getRootNavigationValueExpression(),
+                  treeRelation: this$.getNavigationTreeModel().getTreeRelation(),
+                }),
+              }),
+              Config(TbSeparator),
+              Config(IconButton, {
+                itemId: NavigationTree.EXPAND_ALL_BUTTON_ITEM_ID,
+                icon: expandAllIcon,
+                tooltip: NavigationTreeLabels_properties.Navigation_action_expand_all,
+                handler: bind(this$, this$.#handleExpandAll),
+              }),
+              Config(IconButton, {
+                itemId: NavigationTree.COLLAPSE_ALL_BUTTON_ITEM_ID,
+                icon: collapseAllIcon,
+                tooltip: NavigationTreeLabels_properties.Navigation_action_collapse_all,
+                handler: bind(this$, this$.#handleCollapseAll),
               }),
             ],
           }),
         }),
-      ],
-
-      columns: [
-        Config(TreeColumn, {
-          text: NavigationTreeLabels_properties.navigation_column_header,
-          dataIndex: "text",
-          flex: 2,
-        }),
-        Config(TitleColumn),
-        Config(SegmentColumn),
-        Config(ValidityDateColumn, { mode: "from" }),
-        Config(ValidityDateColumn, { mode: "to" }),
-        Config(StatusColumn),
-      ],
-
-      viewConfig: Config(TreeView, {
-        plugins: [
-          Config(TreeViewDragDropPlugin, {
-            containerScroll: true,
-            allowCopy: false,
-          }),
-        ],
-      }),
-
-      tbar: Config(Toolbar, {
-        ui: ToolbarSkin.FIELD.getSkin(),
-        items: [
-          Config(IconButton, {
-            itemId: "addPageButton",
-            baseAction: new OpenCreateFromTemplateDialogAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
-          }),
-          Config(TbSeparator),
-          Config(IconButton, {
-            itemId: NavigationTree.OPEN_DOCUMENT_BUTTON_ITEM_ID,
-            tooltip: NavigationTreeLabels_properties.Navigation_action_show_in_tab,
-            baseAction: new OpenInTabAction({
-              contentValueExpression: this$.getSelectedNavigationValueExpression(),
-              actionId: "",
-            }),
-          }),
-          Config(IconButton, {
-            itemId: NavigationTree.OPEN_FOLDER_BUTTON_ITEM_ID,
-            iconCls: LocalizationManager_properties.Action_openSiteInRepository_icon,
-            tooltip: NavigationTreeLabels_properties.Navigation_action_show_in_library,
-            baseAction: new ShowInRepositoryAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
-          }),
-          Config(TbSeparator),
-          Config(TextField, {
-            emptyText: NavigationTreeLabels_properties.toolbar_filter_field_emptyText,
-            width: 150,
-            margin: "0 5",
-            plugins: [
-              Config(BindPropertyPlugin, {
-                bindTo: this$.getFilterExpression(),
-                bidirectional: true,
-              }),
-            ],
-          }),
-          Config(TbFill),
-          Config(IconButton, {
-            itemId: NavigationTree.SHOW_HIDDEN_ITEM_ID,
-            iconCls: CoreIcons_properties.view_menu,
-            tooltip: NavigationTreeLabels_properties.Navigation_action_toggle_hidden_items,
-            text: NavigationTreeLabels_properties.Navigation_action_hide_items,
-            enableToggle: true,
-            baseAction: new ShowHiddenItemsAction({
-              contentValueExpression: this$.getRootNavigationValueExpression(),
-              treeRelation: this$.getNavigationTreeModel().getTreeRelation(),
-            }),
-          }),
-          Config(TbSeparator),
-          Config(IconButton, {
-            itemId: NavigationTree.EXPAND_ALL_BUTTON_ITEM_ID,
-            icon: expandAllIcon,
-            tooltip: NavigationTreeLabels_properties.Navigation_action_expand_all,
-            handler: bind(this$, this$.#handleExpandAll),
-          }),
-          Config(IconButton, {
-            itemId: NavigationTree.COLLAPSE_ALL_BUTTON_ITEM_ID,
-            icon: collapseAllIcon,
-            tooltip: NavigationTreeLabels_properties.Navigation_action_collapse_all,
-            handler: bind(this$, this$.#handleCollapseAll),
-          }),
-        ],
-      }),
-    }), config));
+        config,
+      ),
+    );
   }
 
   #handleExpandAll(): void {
@@ -184,7 +196,6 @@ class NavigationTree extends NavigationTreeBase {
   #handleCollapseAll(): void {
     this.collapseAll();
   }
-
 }
 
 export default NavigationTree;

@@ -10,8 +10,7 @@ import Config from "@jangaroo/runtime/Config";
 import trace from "@jangaroo/runtime/trace";
 import OpenCreateFromTemplateDialogAction from "./OpenCreateFromTemplateDialogAction";
 
-interface OpenCreateFromTemplateDialogActionBaseConfig extends Config<OpenDialogAction> {
-}
+interface OpenCreateFromTemplateDialogActionBaseConfig extends Config<OpenDialogAction> {}
 
 class OpenCreateFromTemplateDialogActionBase extends OpenDialogAction {
   declare Config: OpenCreateFromTemplateDialogActionBaseConfig;
@@ -33,7 +32,9 @@ class OpenCreateFromTemplateDialogActionBase extends OpenDialogAction {
       dialog.getModel().set(parentProperty, this.#contentValueExpression.getValue());
     } catch (e) {
       if (is(e, Error)) {
-        trace("[WARN] Unable to update parent channel in processing data. You might need to update the parent manually.");
+        trace(
+          "[WARN] Unable to update parent channel in processing data. You might need to update the parent manually.",
+        );
       } else throw e;
     }
   }
@@ -44,8 +45,12 @@ class OpenCreateFromTemplateDialogActionBase extends OpenDialogAction {
   }
 
   protected isDisabledFor(contents: Array<any>): boolean {
-    return contents.some((content: Content): boolean =>
-      !content.getState().readable || !content.isDocument() || !content.getType().isSubtypeOf("CMNavigation") || content.isCheckedOutByOther(),
+    return contents.some(
+      (content: Content): boolean =>
+        !content.getState().readable ||
+        !content.isDocument() ||
+        !content.getType().isSubtypeOf("CMNavigation") ||
+        content.isCheckedOutByOther(),
     );
   }
 

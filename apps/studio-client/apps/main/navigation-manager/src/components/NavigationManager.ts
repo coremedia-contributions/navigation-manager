@@ -9,8 +9,7 @@ import ConfigUtils from "@jangaroo/runtime/ConfigUtils";
 import NavigationTreeLabels_properties from "../NavigationTreeLabels_properties";
 import NavigationTree from "./NavigationTree";
 
-interface NavigationManagerConfig extends Config<StudioDialog> {
-}
+interface NavigationManagerConfig extends Config<StudioDialog> {}
 
 class NavigationManager extends StudioDialog {
   declare Config: NavigationManagerConfig;
@@ -25,41 +24,45 @@ class NavigationManager extends StudioDialog {
   constructor(config: Config<NavigationManager> = null) {
     // @ts-expect-error Ext JS semantics
     const this$ = this;
-    super(ConfigUtils.apply(Config(NavigationManager, {
-      title: NavigationTreeLabels_properties.Navigation_window_title,
-      cls: "navigation-manager",
-      stateId: "NavigationManagerState",
-      stateful: true,
-      width: 800,
-      height: 450,
-      minWidth: 600,
-      minHeight: 350,
-      collapsible: false,
-      x: 200,
-      y: 200,
-      resizable: true,
-      layout: "fit",
-      constrainHeader: true,
-      closeAction: "destroy", // Required to update data like title, status or validity date
-      ui: WindowSkin.GRID_200.getSkin(),
+    super(
+      ConfigUtils.apply(
+        Config(NavigationManager, {
+          title: NavigationTreeLabels_properties.Navigation_window_title,
+          cls: "navigation-manager",
+          stateId: "NavigationManagerState",
+          stateful: true,
+          width: 800,
+          height: 450,
+          minWidth: 600,
+          minHeight: 350,
+          collapsible: false,
+          x: 200,
+          y: 200,
+          resizable: true,
+          layout: "fit",
+          constrainHeader: true,
+          closeAction: "destroy", // Required to update data like title, status or validity date
+          ui: WindowSkin.GRID_200.getSkin(),
 
-      items: [
-        Config(NavigationTree, {
-          rootVisible: false,
-          itemId: NavigationManager.NAVIGATION_TREE_ITEM_ID,
+          items: [
+            Config(NavigationTree, {
+              rootVisible: false,
+              itemId: NavigationManager.NAVIGATION_TREE_ITEM_ID,
+            }),
+          ],
+          buttons: [
+            Config(Button, {
+              itemId: "closeBtn",
+              ui: ButtonSkin.FOOTER_SECONDARY.getSkin(),
+              scale: "small",
+              text: LocalizationManager_properties.LocalizationManager_close_button,
+              handler: bind(this$, this$.close),
+            }),
+          ],
         }),
-      ],
-      buttons: [
-        Config(Button, {
-          itemId: "closeBtn",
-          ui: ButtonSkin.FOOTER_SECONDARY.getSkin(),
-          scale: "small",
-          text: LocalizationManager_properties.LocalizationManager_close_button,
-          handler: bind(this$, this$.close),
-        }),
-      ],
-
-    }), config));
+        config,
+      ),
+    );
   }
 }
 

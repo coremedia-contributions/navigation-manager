@@ -1,19 +1,17 @@
-
 /**
  * Interface values for ResourceBundle "NavigationTreeLabels".
  * @see NavigationTreeLabels_properties#INSTANCE
  */
 interface NavigationTreeLabels_properties {
-
-/**
- *Tree
- */
+  /**
+   *Tree
+   */
   Navigation_root_suffix: string;
   Navigation_window_title: string;
   Navigation_window_tooltip: string;
-/**
- *Action
- */
+  /**
+   *Action
+   */
   Navigation_action_show_in_tab: string;
   Navigation_action_show_in_library: string;
   Navigation_action_toggle_hidden_items: string;
@@ -23,9 +21,9 @@ interface NavigationTreeLabels_properties {
   Navigation_action_expand_all: string;
   PDEOpenNavigationTreeAction_text: string;
   PDEOpenNavigationTreeAction_tooltip: string;
-/**
- * Tree Relation message
- */
+  /**
+   * Tree Relation message
+   */
   navigation_checkout_error_title: string;
   navigation_checkout_error_message: string;
   navigation_children_property: string;

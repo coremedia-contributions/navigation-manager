@@ -8,48 +8,41 @@ import Config from "@jangaroo/runtime/Config";
 import ConfigUtils from "@jangaroo/runtime/ConfigUtils";
 import OpenNavigationTreeButton from "../components/OpenNavigationTreeButton";
 
-interface AddNavigationTreeButtonToPageFormPluginConfig extends Config<NestedRulesPlugin> {
-}
+interface AddNavigationTreeButtonToPageFormPluginConfig extends Config<NestedRulesPlugin> {}
 
 class AddNavigationTreeButtonToPageFormPlugin extends NestedRulesPlugin {
   declare Config: AddNavigationTreeButtonToPageFormPluginConfig;
 
   constructor(config: Config<AddNavigationTreeButtonToPageFormPlugin> = null) {
-    super(ConfigUtils.apply(Config(AddNavigationTreeButtonToPageFormPlugin, {
-
-      rules: [
-        Config(DocumentForm, {
-          itemId: "navigationTab",
-          plugins: [
-            Config(AddItemsPlugin, {
-              recursive: true,
-              items: [
-                Config(Separator),
-                Config(OpenNavigationTreeButton),
+    super(
+      ConfigUtils.apply(
+        Config(AddNavigationTreeButtonToPageFormPlugin, {
+          rules: [
+            Config(DocumentForm, {
+              itemId: "navigationTab",
+              plugins: [
+                Config(AddItemsPlugin, {
+                  recursive: true,
+                  items: [Config(Separator), Config(OpenNavigationTreeButton)],
+                  after: [Config(Component, { itemId: LinkListPropertyField.PASTE_BUTTON_ITEM_ID })],
+                }),
               ],
-              after: [
-                Config(Component, { itemId: LinkListPropertyField.PASTE_BUTTON_ITEM_ID }),
+            }),
+            Config(DocumentForm, {
+              itemId: "navigation",
+              plugins: [
+                Config(AddItemsPlugin, {
+                  recursive: true,
+                  items: [Config(Separator), Config(OpenNavigationTreeButton)],
+                  after: [Config(Component, { itemId: LinkListPropertyField.PASTE_BUTTON_ITEM_ID })],
+                }),
               ],
             }),
           ],
         }),
-        Config(DocumentForm, {
-          itemId: "navigation",
-          plugins: [
-            Config(AddItemsPlugin, {
-              recursive: true,
-              items: [
-                Config(Separator),
-                Config(OpenNavigationTreeButton),
-              ],
-              after: [
-                Config(Component, { itemId: LinkListPropertyField.PASTE_BUTTON_ITEM_ID }),
-              ],
-            }),
-          ],
-        }),
-      ],
-    }), config));
+        config,
+      ),
+    );
   }
 }
 

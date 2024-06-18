@@ -15,7 +15,8 @@ ResourceBundleUtil.override(NavigationTreeLabels_properties, {
   PDEOpenNavigationTreeAction_text: "Navigationsbaum anzeigen",
   PDEOpenNavigationTreeAction_tooltip: "Navigationsbaumvisualisierung anzeigen",
   navigation_checkout_error_title: "Fehler beim Anzeigen des Navigationsbaumes",
-  navigation_checkout_error_message: "Aktion konnte nicht ausgeführt werden weil {0} '{1}' von einem anderen User ausgeliehen ist.",
+  navigation_checkout_error_message:
+    "Aktion konnte nicht ausgeführt werden weil {0} '{1}' von einem anderen User ausgeliehen ist.",
   navigation_children_property: "",
   toolbar_filter_field_emptyText: "Hier tippen zum filtern",
   Navigation_action_toggle_hidden_items: "Zeige versteckte Navigationseinträge",
