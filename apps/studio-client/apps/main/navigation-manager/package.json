@@ -2,6 +2,7 @@
   "name": "@coremedia-blueprint/studio-client.main.navigation-manager-studio",
   "author": "Blueprint",
   "version": "1.0.0-SNAPSHOT",
+  "license": "CoreMedia Open Source License",
   "private": true,
   "dependencies": {
     "@coremedia-blueprint/studio-client.main.blueprint-forms": "1.0.0-SNAPSHOT",
