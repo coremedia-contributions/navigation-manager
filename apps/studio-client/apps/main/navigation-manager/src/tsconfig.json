@@ -18,12 +18,6 @@
     },
     {
       "path": "../../../../../../../../../apps/studio-client/apps/main/extensions/create-from-template/src"
-    },
-    {
-      "path": "../../../../../../../../../apps/studio-client/apps/main/ec-studio/src"
-    },
-    {
-      "path": "../../../../../../../../../apps/studio-client/apps/main/extensions/lc/lc-studio/src"
     }
   ]
 }

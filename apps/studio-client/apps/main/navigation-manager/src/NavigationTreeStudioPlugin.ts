@@ -1,7 +1,7 @@
 import CMChannelForm from "@coremedia-blueprint/studio-client.main.blueprint-forms/forms/CMChannelForm";
-import ECommerceStudioPlugin from "@coremedia-blueprint/studio-client.main.ec-studio/ECommerceStudioPlugin";
-import CommerceChildCategoriesForm from "@coremedia-blueprint/studio-client.main.lc-studio/desktop/CommerceChildCategoriesForm";
-import CMExternalPageForm from "@coremedia-blueprint/studio-client.main.lc-studio/forms/CMExternalPageForm";
+// import ECommerceStudioPlugin from "@coremedia-blueprint/studio-client.main.ec-studio/ECommerceStudioPlugin";
+// import CommerceChildCategoriesForm from "@coremedia-blueprint/studio-client.main.lc-studio/desktop/CommerceChildCategoriesForm";
+// import CMExternalPageForm from "@coremedia-blueprint/studio-client.main.lc-studio/forms/CMExternalPageForm";
 import StudioAppsImpl from "@coremedia/studio-client.app-context-models/apps/StudioAppsImpl";
 import studioApps from "@coremedia/studio-client.app-context-models/apps/studioApps";
 import OpenDialogAction from "@coremedia/studio-client.ext.ui-components/actions/OpenDialogAction";
@@ -50,50 +50,50 @@ class NavigationTreeStudioPlugin extends StudioPlugin {
             Config(AddNavigationTreeButtonToPageFormPlugin),
           ],
         }),
-        Config(CMExternalPageForm, {
-          plugins: [
-            Config(AddNavigationTreeButtonToPageFormPlugin),
-          ],
-        }),
-
-        Config(CommerceChildCategoriesForm, {
-          plugins: [
-            Config(NestedRulesPlugin, {
-              rules: [
-                Config(Component, {
-                  itemId: CommerceChildCategoriesForm.INHERITED_CATEGORIES_ITEM_ID,
-                  plugins: [
-                    Config(AddItemsPlugin, {
-                      recursive: true,
-                      items: [
-                        Config(OpenNavigationTreeButton),
-                        Config(Separator),
-                      ],
-                      before: [
-                        Config(Component, { itemId: ECommerceStudioPlugin.REMOVE_LINK_BUTTON_ITEM_ID }),
-                      ],
-                    }),
-                  ],
-                }),
-                Config(Component, {
-                  itemId: CommerceChildCategoriesForm.SELECTED_CATEGORIES_ITEM_ID,
-                  plugins: [
-                    Config(AddItemsPlugin, {
-                      recursive: true,
-                      items: [
-                        Config(OpenNavigationTreeButton),
-                        Config(Separator),
-                      ],
-                      before: [
-                        Config(Component, { itemId: ECommerceStudioPlugin.REMOVE_LINK_BUTTON_ITEM_ID }),
-                      ],
-                    }),
-                  ],
-                }),
-              ],
-            }),
-          ],
-        }),
+        // Config(CMExternalPageForm, {
+        //   plugins: [
+        //     Config(AddNavigationTreeButtonToPageFormPlugin),
+        //   ],
+        // }),
+        //
+        // Config(CommerceChildCategoriesForm, {
+        //   plugins: [
+        //     Config(NestedRulesPlugin, {
+        //       rules: [
+        //         Config(Component, {
+        //           itemId: CommerceChildCategoriesForm.INHERITED_CATEGORIES_ITEM_ID,
+        //           plugins: [
+        //             Config(AddItemsPlugin, {
+        //               recursive: true,
+        //               items: [
+        //                 Config(OpenNavigationTreeButton),
+        //                 Config(Separator),
+        //               ],
+        //               before: [
+        //                 Config(Component, { itemId: ECommerceStudioPlugin.REMOVE_LINK_BUTTON_ITEM_ID }),
+        //               ],
+        //             }),
+        //           ],
+        //         }),
+        //         Config(Component, {
+        //           itemId: CommerceChildCategoriesForm.SELECTED_CATEGORIES_ITEM_ID,
+        //           plugins: [
+        //             Config(AddItemsPlugin, {
+        //               recursive: true,
+        //               items: [
+        //                 Config(OpenNavigationTreeButton),
+        //                 Config(Separator),
+        //               ],
+        //               before: [
+        //                 Config(Component, { itemId: ECommerceStudioPlugin.REMOVE_LINK_BUTTON_ITEM_ID }),
+        //               ],
+        //             }),
+        //           ],
+        //         }),
+        //       ],
+        //     }),
+        //   ],
+        // }),
 
         Config(PreviewContextMenu, {
           plugins: [
