@@ -43,12 +43,18 @@ interface NavigationTreeLabels_properties {
    * Toolbar
    */
   toolbar_filter_field_emptyText: string;
+
+  /**
+   * Preferred site
+   */
+  navigation_preferred_site_is_selected: string;
+  navigation_preferred_site_is_not_selected:  string;
 }
 
 /**
  * Singleton for the current user Locale's instance of ResourceBundle "NavigationTreeLabels".
  * @see NavigationTreeLabels_properties
- */
+ */ /*todo rename navigation tree bundle to manager*/
 const NavigationTreeLabels_properties: NavigationTreeLabels_properties = {
   toolbar_filter_field_emptyText: "Type here to filter",
   navigation_column_header: "Navigation",
@@ -57,7 +63,7 @@ const NavigationTreeLabels_properties: NavigationTreeLabels_properties = {
   validFrom_column_header: "Valid from",
   validTo_column_header: "Valid to",
   Navigation_root_suffix: "Navigation",
-  Navigation_window_title: "Navigation",
+  Navigation_window_title: "Navigation Manager",
   Navigation_window_tooltip: "Open Navigation Tree Visualization",
   Navigation_action_show_in_tab: "Open Item in Tab",
   Navigation_action_show_in_library: "Show Item in Library",
@@ -69,8 +75,10 @@ const NavigationTreeLabels_properties: NavigationTreeLabels_properties = {
   PDEOpenNavigationTreeAction_text: "Open Navigation Tree",
   PDEOpenNavigationTreeAction_tooltip: "Open Navigation Tree Visualization",
   navigation_checkout_error_title: "Error Editing Navigation Tree",
-  navigation_checkout_error_message: "Failed to execute action because {0} '{1}' is checked out by another user.",
+  navigation_checkout_error_message: "Failed to execute action because {0} '{1}' is checked out by another user",
   navigation_children_property: "",
+  navigation_preferred_site_is_selected: "Preferred site is: ",
+  navigation_preferred_site_is_not_selected: "Preferred site has to be selected",
 };
 
 export default NavigationTreeLabels_properties;

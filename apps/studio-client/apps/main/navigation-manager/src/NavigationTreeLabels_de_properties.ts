@@ -7,7 +7,7 @@ import NavigationTreeLabels_properties from "./NavigationTreeLabels_properties";
  */
 ResourceBundleUtil.override(NavigationTreeLabels_properties, {
   Navigation_root_suffix: "Navigation",
-  Navigation_window_title: "Navigation",
+  Navigation_window_title: "Navigation Manager",
   Navigation_window_tooltip: "Öffne Navigationsbaumvisualisierung",
   Navigation_action_show_in_tab: "Content in einem Tab öffnen",
   Navigation_action_show_in_library: "Content in der Bibliothek anzeigen",
@@ -15,7 +15,7 @@ ResourceBundleUtil.override(NavigationTreeLabels_properties, {
   PDEOpenNavigationTreeAction_text: "Navigationsbaum anzeigen",
   PDEOpenNavigationTreeAction_tooltip: "Navigationsbaumvisualisierung anzeigen",
   navigation_checkout_error_title: "Fehler beim Anzeigen des Navigationsbaumes",
-  navigation_checkout_error_message: "Aktion konnte nicht ausgeführt werden weil {0} '{1}' von einem anderen User ausgeliehen ist.",
+  navigation_checkout_error_message: "Aktion konnte nicht ausgeführt werden weil {0} '{1}' von einem anderen User ausgeliehen ist",
   navigation_children_property: "",
   toolbar_filter_field_emptyText: "Hier tippen zum filtern",
   Navigation_action_toggle_hidden_items: "Zeige versteckte Navigationseinträge",
@@ -26,4 +26,6 @@ ResourceBundleUtil.override(NavigationTreeLabels_properties, {
   title_column_header: "Title",
   validFrom_column_header: "Gültig von",
   validTo_column_header: "Gültig bis",
+  navigation_preferred_site_is_selected: "Präferierte Site ist: ",
+  navigation_preferred_site_is_not_selected: "Präferierte Site muss ausgewählt werden",
 });

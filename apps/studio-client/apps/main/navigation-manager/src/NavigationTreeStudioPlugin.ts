@@ -33,7 +33,7 @@ class NavigationTreeStudioPlugin extends StudioPlugin {
   override init(editorContext: IEditorContext): void {
     super.init(editorContext);
 
-    cast(StudioAppsImpl, studioApps._).getSubAppLauncherRegistry().registerSubAppLauncher("cmNavigationEditor", (): void => {
+    cast(StudioAppsImpl, studioApps._).getSubAppLauncherRegistry().registerSubAppLauncher("cmNavigationEditor", (): void => { /* todo rename navigation manager*/
       const openDialogAction = new OpenDialogAction({ dialog: Config(NavigationManager) });
       openDialogAction.addComponent(new Component({}));
       openDialogAction.execute();
