@@ -23,6 +23,7 @@ import NavigationManager from "./components/NavigationManager";
 import OpenNavigationTreeButton from "./components/OpenNavigationTreeButton";
 import AddNavigationTreeActionsToPreviewContextMenuPlugin from "./plugins/AddNavigationTreeActionsToPreviewContextMenuPlugin";
 import AddNavigationTreeButtonToPageFormPlugin from "./plugins/AddNavigationTreeButtonToPageFormPlugin";
+import Ext from "@jangaroo/ext-ts";
 
 interface NavigationTreeStudioPluginConfig extends Config<StudioPlugin> {
 }
@@ -34,9 +35,17 @@ class NavigationTreeStudioPlugin extends StudioPlugin {
     super.init(editorContext);
 
     cast(StudioAppsImpl, studioApps._).getSubAppLauncherRegistry().registerSubAppLauncher("cmNavigationEditor", (): void => { /* todo rename navigation manager*/
-      const openDialogAction = new OpenDialogAction({ dialog: Config(NavigationManager) });
-      openDialogAction.addComponent(new Component({}));
-      openDialogAction.execute();
+      const dialog =  Ext.getCmp(NavigationManager.ID);
+      if (dialog) {
+        if (dialog.rendered) {
+          dialog.show();
+          dialog.focus();
+        }
+      } else {
+        const openDialogAction = new OpenDialogAction({ dialog: Config(NavigationManager) });
+        openDialogAction.addComponent(new Component({}));
+        openDialogAction.execute();
+      }
     });
   }
 

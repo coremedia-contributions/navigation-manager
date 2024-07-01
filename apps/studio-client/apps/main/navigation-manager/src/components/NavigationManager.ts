@@ -19,6 +19,7 @@ interface NavigationManagerConfig extends Config<StudioDialog> {
 class NavigationManager extends StudioDialog {
   declare Config: NavigationManagerConfig;
 
+  static readonly ID: string = "navigationManagerDialogID";
   static override readonly xtype: string = "com.coremedia.blueprint.studio.navigationtree.config.navigationManager";
 
   /**
@@ -31,6 +32,7 @@ class NavigationManager extends StudioDialog {
     // @ts-expect-error Ext JS semantics
     const this$ = this;
     super(ConfigUtils.apply(Config(NavigationManager, {
+      id: NavigationManager.ID,
       title: NavigationTreeLabels_properties.Navigation_window_title,
       cls: "navigation-manager",
       stateId: "NavigationManagerState",

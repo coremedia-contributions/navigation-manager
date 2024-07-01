@@ -194,6 +194,8 @@ class NavigationTreeBase extends TreePanel {
   }
 
   #updateTreeFilter(): void {
+    this.getStore().clearFilter();
+
     const filterTerm = this.#filterExpression.getValue();
     if (filterTerm) {
       const filters = this.getStore().getFilters();
@@ -205,9 +207,6 @@ class NavigationTreeBase extends TreePanel {
 
       // make sure filter results are visible
       this.expandAll();
-
-    } else {
-      this.getStore().clearFilter();
     }
   }
 
