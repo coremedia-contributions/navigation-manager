@@ -12,6 +12,7 @@ import editorContext from "@coremedia/studio-client.main.editor-components/sdk/e
 import ValueExpressionFactory from "@coremedia/studio-client.client-core/data/ValueExpressionFactory";
 import StatusLabel from "./StatusLabel";
 import VBoxLayout from "@jangaroo/ext-ts/layout/container/VBox";
+import Ext from "@jangaroo/ext-ts";
 
 interface NavigationManagerConfig extends Config<StudioDialog> {
 }
@@ -82,8 +83,12 @@ class NavigationManager extends StudioDialog {
 
   #preferredSiteChangedHandler() {
     // update state of internal components or connect them with VE
+    const dialog =  Ext.getCmp(NavigationManager.ID);
+    if (!dialog || !dialog.rendered) {
+      return;
+    }
+
     this.remove(NavigationManager.NAVIGATION_TREE_ITEM_ID);
-    this.add
     this.insert(2,
             Config(NavigationTree, {
               rootVisible: false,
