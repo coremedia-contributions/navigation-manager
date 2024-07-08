@@ -14,6 +14,7 @@ ResourceBundleUtil.override(NavigationTreeLabels_properties, {
   Navigation_action_create_from_template: "Seite aus Vorlage erzeugen",
   PDEOpenNavigationTreeAction_text: "Navigationsbaum anzeigen",
   PDEOpenNavigationTreeAction_tooltip: "Navigationsbaumvisualisierung anzeigen",
+  PDEOpenNavigationTreeAction_disabled_tooltip: "Navigation Manager funktioniert nur auf der Präferierte Site",
   navigation_checkout_error_title: "Fehler beim Anzeigen des Navigationsbaumes",
   navigation_checkout_error_message: "Aktion konnte nicht ausgeführt werden weil {0} '{1}' von einem anderen User ausgeliehen ist",
   navigation_children_property: "",
@@ -28,4 +29,5 @@ ResourceBundleUtil.override(NavigationTreeLabels_properties, {
   validTo_column_header: "Gültig bis",
   navigation_preferred_site_is_selected: "Präferierte Site ist: ",
   navigation_preferred_site_is_not_selected: "Präferierte Site muss ausgewählt werden",
+
 });

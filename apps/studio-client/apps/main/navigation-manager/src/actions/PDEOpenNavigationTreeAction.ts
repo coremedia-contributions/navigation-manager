@@ -6,6 +6,7 @@ import { as } from "@jangaroo/runtime";
 import Config from "@jangaroo/runtime/Config";
 import NavigationTreeLabels_properties from "../NavigationTreeLabels_properties";
 import NavigationManager from "../components/NavigationManager";
+import editorContext from "@coremedia/studio-client.main.editor-components/sdk/editorContext";
 
 interface PDEOpenNavigationTreeActionConfig extends Config<MetadataBeanAction> {
 }
@@ -25,11 +26,15 @@ class PDEOpenNavigationTreeAction extends MetadataBeanAction {
     if (!content || !content.getType()) {
       return true;
     }
+    const siteService = editorContext._.getSitesService();
+    if(siteService.getPreferredSiteId() != siteService.getSiteIdFor(content))
+      return true;
     return !content.getType().isSubtypeOf("CMNavigation");
-  }
+  }/* todo check usage for lc only? */
 
   protected override handle(): void {
     const navMgrDialog = new NavigationManager();
+    //navMgrDialog.select
     navMgrDialog.show();
   }
 }

@@ -13,8 +13,13 @@ import ValueExpressionFactory from "@coremedia/studio-client.client-core/data/Va
 import StatusLabel from "./StatusLabel";
 import VBoxLayout from "@jangaroo/ext-ts/layout/container/VBox";
 import Ext from "@jangaroo/ext-ts";
+import ValueExpression from "@coremedia/studio-client.client-core/data/ValueExpression";
+import OpenNavigationEditorDialogAction from "../actions/OpenNavigationEditorDialogAction";
+import NavigationTreeBase from "./NavigationTreeBase";
 
-interface NavigationManagerConfig extends Config<StudioDialog> {
+interface NavigationManagerConfig extends Config<StudioDialog> ,
+        Partial<Pick<NavigationTreeBase,
+                | "selectionVE">>{
 }
 
 class NavigationManager extends StudioDialog {
@@ -28,6 +33,8 @@ class NavigationManager extends StudioDialog {
    */
   static readonly NAVIGATION_TREE_ITEM_ID: string = "navigationTree";
   static readonly PREFERRED_SITE_STATUS_LABEL_ITEM_ID: string = "preferredSiteStatusLabel";
+
+  //selectionVE: ValueExpression = null;
 
   constructor(config: Config<NavigationManager> = null) {
     // @ts-expect-error Ext JS semantics
@@ -65,6 +72,7 @@ class NavigationManager extends StudioDialog {
         Config(NavigationTree, {
           rootVisible: false,
           itemId: NavigationManager.NAVIGATION_TREE_ITEM_ID,
+          selectionVE: config.selectionVE,
         }),
       ],
       buttons: [
@@ -98,10 +106,11 @@ class NavigationManager extends StudioDialog {
   }
 
   #transformSiteIdIntoPreferredSiteLabelText(siteID) {
-    let site = editorContext._.getSitesService().getSite(siteID);
-    if (!site)
-      return NavigationTreeLabels_properties.navigation_preferred_site_is_not_selected
-    let site_name_and_locale = site.getName() + ' | ' + site.getLocale().getDisplayName();
+    const site = editorContext._.getSitesService().getSite(siteID);
+    if (!site) {
+      return NavigationTreeLabels_properties.navigation_preferred_site_is_not_selected;
+    }
+    const site_name_and_locale = site.getName() + ' | ' + site.getLocale().getDisplayName();
     return NavigationTreeLabels_properties.navigation_preferred_site_is_selected + site_name_and_locale;
   }
 }

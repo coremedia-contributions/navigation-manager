@@ -1,14 +1,18 @@
 import CoreIcons_properties from "@coremedia/studio-client.core-icons/CoreIcons_properties";
 import OpenInTabAction from "@coremedia/studio-client.ext.form-services-toolkit/actions/OpenInTabAction";
-import ShowInRepositoryAction from "@coremedia/studio-client.ext.library-services-toolkit/actions/ShowInRepositoryAction";
+import ShowInRepositoryAction
+  from "@coremedia/studio-client.ext.library-services-toolkit/actions/ShowInRepositoryAction";
 import IconButton from "@coremedia/studio-client.ext.ui-components/components/IconButton";
 import BindPropertyPlugin from "@coremedia/studio-client.ext.ui-components/plugins/BindPropertyPlugin";
 import BindTreePlugin from "@coremedia/studio-client.ext.ui-components/plugins/BindTreePlugin";
 import ContextMenuPlugin from "@coremedia/studio-client.ext.ui-components/plugins/ContextMenuPlugin";
-import HideObsoleteSeparatorsPlugin from "@coremedia/studio-client.ext.ui-components/plugins/HideObsoleteSeparatorsPlugin";
+import HideObsoleteSeparatorsPlugin
+  from "@coremedia/studio-client.ext.ui-components/plugins/HideObsoleteSeparatorsPlugin";
 import ToolbarSkin from "@coremedia/studio-client.ext.ui-components/skins/ToolbarSkin";
-import LinkListPropertyField from "@coremedia/studio-client.main.editor-components/sdk/premular/fields/LinkListPropertyField";
-import LocalizationManager_properties from "@coremedia/studio-client.main.editor-components/sdk/sites/LocalizationManager_properties";
+import LinkListPropertyField
+  from "@coremedia/studio-client.main.editor-components/sdk/premular/fields/LinkListPropertyField";
+import LocalizationManager_properties
+  from "@coremedia/studio-client.main.editor-components/sdk/sites/LocalizationManager_properties";
 import TextField from "@jangaroo/ext-ts/form/field/Text";
 import Item from "@jangaroo/ext-ts/menu/Item";
 import Menu from "@jangaroo/ext-ts/menu/Menu";
@@ -19,7 +23,7 @@ import Toolbar from "@jangaroo/ext-ts/toolbar/Toolbar";
 import TreeColumn from "@jangaroo/ext-ts/tree/Column";
 import TreeView from "@jangaroo/ext-ts/tree/View";
 import TreeViewDragDropPlugin from "@jangaroo/ext-ts/tree/plugin/TreeViewDragDrop";
-import { bind } from "@jangaroo/runtime";
+import {as, bind} from "@jangaroo/runtime";
 import Config from "@jangaroo/runtime/Config";
 import ConfigUtils from "@jangaroo/runtime/ConfigUtils";
 import NavigationTreeLabels_properties from "../NavigationTreeLabels_properties";
@@ -32,10 +36,18 @@ import StatusColumn from "./StatusColumn";
 import TitleColumn from "./TitleColumn";
 import ValidityDateColumn from "./ValidityDateColumn";
 import SegmentColumn from "./SegmentColumn";
+import Content from "@coremedia/studio-client.cap-rest-client/content/Content";
+import trace from "@jangaroo/runtime/trace";
+import NavigationIdHelper from "./NavigationIdHelper";
+import BindTreeSelectionPlugin from "@coremedia/studio-client.ext.ui-components/plugins/BindTreeSelectionPlugin";
+import ValueExpressionFactory from "@coremedia/studio-client.client-core/data/ValueExpressionFactory";
 
-interface NavigationTreeConfig extends Config<NavigationTreeBase> {
+interface NavigationTreeConfig extends Config<NavigationTreeBase> { /*why???????*/
 }
 
+// ,
+// Partial<Pick<NavigationTreeBase,
+// | "selectionVE">>
 class NavigationTree extends NavigationTreeBase {
   declare Config: NavigationTreeConfig;
 
@@ -66,6 +78,16 @@ class NavigationTree extends NavigationTreeBase {
           treeModel: this$.getNavigationTreeModel(),
           expandInitially: false,
         }),
+        Config(BindTreeSelectionPlugin, {
+          valueExpression: //config.selectionVE,
+          /*ValueExpressionFactory.createTransformingValueExpression(config.selectionVE, (content) => {
+            return NavigationIdHelper.parseContentId(content.getId());
+          }),*/
+          ValueExpressionFactory.createTransformingValueExpression(config.selectionVE, (content) => {
+            return [content];
+          }),
+          treeModel: this$.getNavigationTreeModel(),
+        }),
         Config(ContextMenuPlugin, {
           contextMenu: Config(Menu, {
             plain: true,
@@ -75,16 +97,16 @@ class NavigationTree extends NavigationTreeBase {
             items: [
               Config(Item, {
                 itemId: LinkListPropertyField.OPEN_IN_TAB_MENU_ITEM_ID,
-                baseAction: new OpenInTabAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
+                baseAction: new OpenInTabAction({contentValueExpression: this$.getSelectedNavigationValueExpression()}),
               }),
               Config(Item, {
                 itemId: LinkListPropertyField.SHOW_IN_LIBRARY_MENU_ITEM_ID,
-                baseAction: new ShowInRepositoryAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
+                baseAction: new ShowInRepositoryAction({contentValueExpression: this$.getSelectedNavigationValueExpression()}),
               }),
-              Config(ext_menu_Separator, { itemId: "createFromTemplateSeparator" }),
+              Config(ext_menu_Separator, {itemId: "createFromTemplateSeparator"}),
               Config(Item, {
                 itemId: "createFromTemplate",
-                baseAction: new OpenCreateFromTemplateDialogAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
+                baseAction: new OpenCreateFromTemplateDialogAction({contentValueExpression: this$.getSelectedNavigationValueExpression()}),
               }),
             ],
           }),
@@ -99,8 +121,8 @@ class NavigationTree extends NavigationTreeBase {
         }),
         Config(TitleColumn),
         Config(SegmentColumn),
-        Config(ValidityDateColumn, { mode: "from" }),
-        Config(ValidityDateColumn, { mode: "to" }),
+        Config(ValidityDateColumn, {mode: "from"}),
+        Config(ValidityDateColumn, {mode: "to"}),
         Config(StatusColumn),
       ],
 
@@ -118,7 +140,7 @@ class NavigationTree extends NavigationTreeBase {
         items: [
           Config(IconButton, {
             itemId: "addPageButton",
-            baseAction: new OpenCreateFromTemplateDialogAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
+            baseAction: new OpenCreateFromTemplateDialogAction({contentValueExpression: this$.getSelectedNavigationValueExpression()}),
           }),
           Config(TbSeparator),
           Config(IconButton, {
@@ -133,7 +155,7 @@ class NavigationTree extends NavigationTreeBase {
             itemId: NavigationTree.OPEN_FOLDER_BUTTON_ITEM_ID,
             iconCls: LocalizationManager_properties.Action_openSiteInRepository_icon,
             tooltip: NavigationTreeLabels_properties.Navigation_action_show_in_library,
-            baseAction: new ShowInRepositoryAction({ contentValueExpression: this$.getSelectedNavigationValueExpression() }),
+            baseAction: new ShowInRepositoryAction({contentValueExpression: this$.getSelectedNavigationValueExpression()}),
           }),
           Config(TbSeparator),
           Config(TextField, {
@@ -175,6 +197,9 @@ class NavigationTree extends NavigationTreeBase {
         ],
       }),
     }), config));
+    //this$.getSelectedNavigationValueExpression().setValue(NavigationIdHelper.parseContentId(config.selectionVE.getValue().getId()));
+    trace("test", config.selectionVE.getValue());
+    //this$.setSelection(as(config.selectionVE.getValue(),Content).ge)
   }
 
   #handleExpandAll(): void {

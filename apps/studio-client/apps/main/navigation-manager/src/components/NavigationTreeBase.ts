@@ -20,13 +20,19 @@ import AbstractTreeModelBase from "./AbstractTreeModelBase";
 import NavigationIdHelper from "./NavigationIdHelper";
 import NavigationTree from "./NavigationTree";
 import NavigationTreeModel from "./NavigationTreeModel";
+import trace from "@jangaroo/runtime/trace";
+import Model from "@jangaroo/ext-ts/data/Model";
 
-interface NavigationTreeBaseConfig extends Config<TreePanel> {
+interface NavigationTreeBaseConfig extends Config<TreePanel> ,
+        Partial<Pick<NavigationTreeBase,
+                | "selectionVE">> {
   listeners?: Events<TreePanel> & Events<TreeViewDragDropPlugin> & Events<CellEditingPlugin>,
 }
 
 class NavigationTreeBase extends TreePanel {
   declare Config: NavigationTreeBaseConfig;
+
+  selectionVE: ValueExpression = null;
 
   #navigationTreeModel: NavigationTreeModel = null;
 
@@ -41,8 +47,23 @@ class NavigationTreeBase extends TreePanel {
   constructor(config: Config<NavigationTree> = null) {
     super(config);
     // this.expandAll();
+    //1 MODEL //bind tree selection// derived sites
+    //2 wrong status for button
+    //3 extend donfig is mandatory even there is extension in base class?
 
     this.#treeSelectionModel.addListener("selectionchange", bind(this, this.#treeSelectionChanged));
+    //this.#treeSelectionModel.select(,false,false);
+    /*trace('in constructor')
+    trace(this.selectionVE.getValue())
+    const id = NavigationIdHelper.parseContentId(this.selectionVE.getValue().getId())
+    trace("id: ", id)
+    const model:Model = this.#navigationTreeModel.getNodeModel(id);
+    trace("model: ", model)
+    this.#treeSelectionModel.select(model,false,false);
+    //this.#treeSelectionModel.selectAll(false);
+    this.#treeSelectionModel.setSelected([model])
+*/
+    //trace(this.getNavigationTreeModel().getNodeModel(NavigationIdHelper.parseContentId(this.selectionVE.getValue().id)))
 
     // this.getNavigationTreeModel().getTreeRelation().setToggleViewCallback(bind(this, this.expandAll));
     this.mon(this, "beforecelldblclick", (this_: TableView, td: HTMLElement, cellIndex: number, record: any, tr: HTMLElement, rowIndex: number, e: ExtEvent & { position?: CellContext }): any => {
@@ -187,10 +208,16 @@ class NavigationTreeBase extends TreePanel {
 
   //noinspection JSUnusedLocalSymbols
   #treeSelectionChanged(selectionModel: SelectionModel, selected: Array<any>): void {
+    trace("selected");
+    trace(selected);
     if (selected.length > 0) {
       const newNode/*:TreeModel*/ = selected[0];
+      trace(newNode.id)
+      trace(newNode)
       this.#selectedNavigationValueExpression.setValue(this.getNavigationTreeModel().getNodeModel(NavigationIdHelper.parseContentId(newNode.id)));
     }
+    trace("VE");
+    trace(this.#selectedNavigationValueExpression.getValue());
   }
 
   #updateTreeFilter(): void {

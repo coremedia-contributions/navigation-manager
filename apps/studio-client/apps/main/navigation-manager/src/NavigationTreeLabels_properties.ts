@@ -23,6 +23,7 @@ interface NavigationTreeLabels_properties {
   Navigation_action_expand_all: string;
   PDEOpenNavigationTreeAction_text: string;
   PDEOpenNavigationTreeAction_tooltip: string;
+  PDEOpenNavigationTreeAction_disabled_tooltip: string;
 /**
  * Tree Relation message
  */
@@ -74,6 +75,7 @@ const NavigationTreeLabels_properties: NavigationTreeLabels_properties = {
   Navigation_action_expand_all: "Expand All",
   PDEOpenNavigationTreeAction_text: "Open Navigation Tree",
   PDEOpenNavigationTreeAction_tooltip: "Open Navigation Tree Visualization",
+  PDEOpenNavigationTreeAction_disabled_tooltip: "Navigation Manager works only on preferred site",
   navigation_checkout_error_title: "Error Editing Navigation Tree",
   navigation_checkout_error_message: "Failed to execute action because {0} '{1}' is checked out by another user",
   navigation_children_property: "",

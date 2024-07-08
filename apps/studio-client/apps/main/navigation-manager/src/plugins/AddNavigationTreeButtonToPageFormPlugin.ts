@@ -7,8 +7,12 @@ import Separator from "@jangaroo/ext-ts/toolbar/Separator";
 import Config from "@jangaroo/runtime/Config";
 import ConfigUtils from "@jangaroo/runtime/ConfigUtils";
 import OpenNavigationTreeButton from "../components/OpenNavigationTreeButton";
+import WorkArea from "@coremedia/studio-client.main.editor-components/sdk/desktop/WorkArea";
+import OpenNavigationEditorDialogAction from "../actions/OpenNavigationEditorDialogAction";
 
-interface AddNavigationTreeButtonToPageFormPluginConfig extends Config<NestedRulesPlugin> {
+interface AddNavigationTreeButtonToPageFormPluginConfig extends Config<NestedRulesPlugin>,
+        Partial<Pick<OpenNavigationEditorDialogAction,
+                | "contentValueExpression">> {
 }
 
 class AddNavigationTreeButtonToPageFormPlugin extends NestedRulesPlugin {
@@ -25,7 +29,7 @@ class AddNavigationTreeButtonToPageFormPlugin extends NestedRulesPlugin {
               recursive: true,
               items: [
                 Config(Separator),
-                Config(OpenNavigationTreeButton),
+                Config(OpenNavigationTreeButton, {contentValueExpression: WorkArea.ACTIVE_CONTENT_VALUE_EXPRESSION}),
               ],
               after: [
                 Config(Component, { itemId: LinkListPropertyField.PASTE_BUTTON_ITEM_ID }),
@@ -40,7 +44,7 @@ class AddNavigationTreeButtonToPageFormPlugin extends NestedRulesPlugin {
               recursive: true,
               items: [
                 Config(Separator),
-                Config(OpenNavigationTreeButton),
+                Config(OpenNavigationTreeButton, {contentValueExpression: WorkArea.ACTIVE_CONTENT_VALUE_EXPRESSION}),
               ],
               after: [
                 Config(Component, { itemId: LinkListPropertyField.PASTE_BUTTON_ITEM_ID }),
