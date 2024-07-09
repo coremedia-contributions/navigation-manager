@@ -34,7 +34,7 @@ class NavigationTreeStudioPlugin extends StudioPlugin {
   override init(editorContext: IEditorContext): void {
     super.init(editorContext);
 
-    cast(StudioAppsImpl, studioApps._).getSubAppLauncherRegistry().registerSubAppLauncher("cmNavigationEditor", (): void => { /* todo rename navigation manager*/
+    cast(StudioAppsImpl, studioApps._).getSubAppLauncherRegistry().registerShortcutRunner("cmNavigationManager", (): void => { /* todo rename navigation editor -> manager*/
       const dialog =  Ext.getCmp(NavigationManager.ID);
       if (dialog) {
         if (dialog.rendered) {
