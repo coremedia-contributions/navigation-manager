@@ -79,13 +79,14 @@ class NavigationTree extends NavigationTreeBase {
           expandInitially: false,
         }),
         Config(BindTreeSelectionPlugin, {
-          valueExpression: //config.selectionVE,
-          /*ValueExpressionFactory.createTransformingValueExpression(config.selectionVE, (content) => {
-            return NavigationIdHelper.parseContentId(content.getId());
-          }),*/
-          ValueExpressionFactory.createTransformingValueExpression(config.selectionVE, (content) => {
-            return [content];
-          }),
+          valueExpression: 
+            ValueExpressionFactory.createTransformingValueExpression(config.selectionVE || ValueExpressionFactory.createFromValue(undefined),
+              (content) => {
+                if (content === undefined) {
+                  return [];
+                }
+                return [content];
+              }),
           treeModel: this$.getNavigationTreeModel(),
         }),
         Config(ContextMenuPlugin, {
@@ -198,7 +199,7 @@ class NavigationTree extends NavigationTreeBase {
       }),
     }), config));
     //this$.getSelectedNavigationValueExpression().setValue(NavigationIdHelper.parseContentId(config.selectionVE.getValue().getId()));
-    trace("test", config.selectionVE.getValue());
+    //trace("test", config.selectionVE.getValue());
     //this$.setSelection(as(config.selectionVE.getValue(),Content).ge)
   }
 
