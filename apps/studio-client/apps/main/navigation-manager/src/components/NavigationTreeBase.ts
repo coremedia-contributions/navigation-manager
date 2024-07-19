@@ -47,22 +47,23 @@ class NavigationTreeBase extends TreePanel {
   constructor(config: Config<NavigationTree> = null) {
     super(config);
     // this.expandAll();
-    //1 MODEL //bind tree selection// derived sites
-    //2 wrong status for button
-    //3 extend donfig is mandatory even there is extension in base class?
+    //1 bind tree selection plugin or select
+    //2 wrong tooltip for button
 
     this.#treeSelectionModel.addListener("selectionchange", bind(this, this.#treeSelectionChanged));
-    //this.#treeSelectionModel.select(,false,false);
-    /*trace('in constructor')
-    trace(this.selectionVE.getValue())
-    const id = NavigationIdHelper.parseContentId(this.selectionVE.getValue().getId())
-    trace("id: ", id)
-    const model:Model = this.#navigationTreeModel.getNodeModel(id);
-    trace("model: ", model)
-    this.#treeSelectionModel.select(model,false,false);
-    //this.#treeSelectionModel.selectAll(false);
-    this.#treeSelectionModel.setSelected([model])
-*/
+    //this.#treeSelectionModel.select(,false,false);//store
+    if (this.selectionVE) {
+      trace('in constructor')
+      trace(this.selectionVE.getValue())
+      const id = NavigationIdHelper.parseContentId(this.selectionVE.getValue().getId())
+      trace("id: ", id)
+      const model: Model = this.#navigationTreeModel.getNodeModel(id);
+      trace("model: ", model)
+      this.#treeSelectionModel.select(model, false, false);
+      //this.#treeSelectionModel.selectAll(false);
+      //this.#treeSelectionModel.setSelected([model])
+    }
+
     //trace(this.getNavigationTreeModel().getNodeModel(NavigationIdHelper.parseContentId(this.selectionVE.getValue().id)))
 
     // this.getNavigationTreeModel().getTreeRelation().setToggleViewCallback(bind(this, this.expandAll));
@@ -177,6 +178,16 @@ class NavigationTreeBase extends TreePanel {
 
   };
 
+  protected getSelectionVE(config): ValueExpression {
+    return ValueExpressionFactory.createTransformingValueExpression(config.selectionVE || ValueExpressionFactory.createFromValue(undefined),
+      (content) => {
+        if (content === undefined) {
+          return [];
+        }
+        return [content];
+      });
+  }
+
   protected getNavigationTreeModel(): NavigationTreeModel {
     if (!this.#navigationTreeModel) {
       this.#navigationTreeModel = new NavigationTreeModel();
@@ -208,16 +219,18 @@ class NavigationTreeBase extends TreePanel {
 
   //noinspection JSUnusedLocalSymbols
   #treeSelectionChanged(selectionModel: SelectionModel, selected: Array<any>): void {
-    trace("selected");
-    trace(selected);
+    // trace("treeSelectionChanged");
+    //  todo remove ALL traces
     if (selected.length > 0) {
       const newNode/*:TreeModel*/ = selected[0];
-      trace(newNode.id)
-      trace(newNode)
-      this.#selectedNavigationValueExpression.setValue(this.getNavigationTreeModel().getNodeModel(NavigationIdHelper.parseContentId(newNode.id)));
+      trace("treeSelectionChanged", "id", newNode.id, "node", newNode);
+      const selectedContent = this.getNavigationTreeModel().getNodeModel(NavigationIdHelper.parseContentId(newNode.id));
+      this.#selectedNavigationValueExpression.setValue(selectedContent);
+    } else {
+      // todo deselect?
+      this.#selectedNavigationValueExpression.setValue(undefined);
     }
-    trace("VE");
-    trace(this.#selectedNavigationValueExpression.getValue());
+    trace("treeSelectionChanged", "VE", this.#selectedNavigationValueExpression.getValue());
   }
 
   #updateTreeFilter(): void {

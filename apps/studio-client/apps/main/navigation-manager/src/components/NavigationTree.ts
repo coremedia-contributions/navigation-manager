@@ -78,17 +78,10 @@ class NavigationTree extends NavigationTreeBase {
           treeModel: this$.getNavigationTreeModel(),
           expandInitially: false,
         }),
-        Config(BindTreeSelectionPlugin, {
-          valueExpression: 
-            ValueExpressionFactory.createTransformingValueExpression(config.selectionVE || ValueExpressionFactory.createFromValue(undefined),
-              (content) => {
-                if (content === undefined) {
-                  return [];
-                }
-                return [content];
-              }),
+        /*Config(BindTreeSelectionPlugin, {
+          valueExpression: this$.getSelectionVE(config),
           treeModel: this$.getNavigationTreeModel(),
-        }),
+        }),*/
         Config(ContextMenuPlugin, {
           contextMenu: Config(Menu, {
             plain: true,

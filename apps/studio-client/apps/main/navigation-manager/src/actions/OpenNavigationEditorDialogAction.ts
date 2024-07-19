@@ -9,6 +9,7 @@ import editorContext from "@coremedia/studio-client.main.editor-components/sdk/e
 import ValueExpressionFactory from "@coremedia/studio-client.client-core/data/ValueExpressionFactory";
 import trace from "@jangaroo/runtime/trace";
 import {bind} from "@jangaroo/runtime";
+import BindPropertyPlugin from "@coremedia/studio-client.ext.ui-components/plugins/BindPropertyPlugin";
 
 interface OpenNavigationEditorDialogActionConfig extends Config<OpenDialogAction>,
         Partial<Pick<OpenNavigationEditorDialogAction,
@@ -26,8 +27,10 @@ class OpenNavigationEditorDialogAction extends OpenDialogAction {
     super(ConfigUtils.apply(Config(OpenNavigationEditorDialogAction, {
       iconCls: CoreIcons_properties.tree_view,
       text: NavigationTreeLabels_properties.Navigation_window_title,
-      tooltip: NavigationTreeLabels_properties.Navigation_window_tooltip,
+      //tooltip: "test NavigationTreeLabels_properties.Navigation_window_tooltip",
       //contentValueExpression: config.contentValueExpression,
+      // todo there ris no plugins  plugins: [
+       /* ]*/
       dialog: Config(NavigationManager, {selectionVE: config.contentValueExpression}),
     }), config));
     this.contentValueExpression = config.contentValueExpression;
@@ -51,7 +54,7 @@ class OpenNavigationEditorDialogAction extends OpenDialogAction {
 
   #onPreferredSiteChange(){
     this.calculateDisabled();
-   /* const disabled =  this.#disableOnNonPreferredSite();
+    /*const disabled =  this.#disableOnNonPreferredSite();
     this.tooltip =  disabled ? NavigationTreeLabels_properties.PDEOpenNavigationTreeAction_disabled_tooltip
             : NavigationTreeLabels_properties.PDEOpenNavigationTreeAction_tooltip;*/
     //this.forceDisabledExpression??
