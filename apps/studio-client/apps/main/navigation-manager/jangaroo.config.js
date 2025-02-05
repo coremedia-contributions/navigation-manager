@@ -21,7 +21,9 @@ module.exports = jangarooConfig({
   },
   appManifests: {
     en: {
-      categories: ["Innovation"],
+      categories: [
+        "Content"
+      ],
       cmCategoryIcons: {
         Innovation: [
           {
@@ -39,9 +41,10 @@ module.exports = jangarooConfig({
       cmServiceShortcuts: [
         {
           cmKey: "cmNavigationEditor",
+          cmCategory: "Content",
           name: "Navigation Manager",
           url: "",
-          cmCategory: "Innovation",
+          cmAdministrative: false,
           icons: [
             {
               src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/navigation_24.svg",
