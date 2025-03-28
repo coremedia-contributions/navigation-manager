@@ -7,13 +7,13 @@ import NavigationTreeLabels_properties from "./NavigationTreeLabels_properties";
  */
 ResourceBundleUtil.override(NavigationTreeLabels_properties, {
   Navigation_root_suffix: "Navigation",
-  Navigation_window_title: "Navigation",
+  Navigation_window_title: "Navigation Manager",
   Navigation_window_tooltip: "Öffne Navigationsbaumvisualisierung",
   Navigation_action_show_in_tab: "Content in einem Tab öffnen",
   Navigation_action_show_in_library: "Content in der Bibliothek anzeigen",
   Navigation_action_create_from_template: "Seite aus Vorlage erzeugen",
-  PDEOpenNavigationTreeAction_text: "Navigationsbaum anzeigen",
-  PDEOpenNavigationTreeAction_tooltip: "Navigationsbaumvisualisierung anzeigen",
+  PDEOpenNavigationTreeAction_text: "Navigation Manager öffnen",
+  PDEOpenNavigationTreeAction_tooltip: "Navigation Manager öffnen",
   navigation_checkout_error_title: "Fehler beim Anzeigen des Navigationsbaumes",
   navigation_checkout_error_message:
     "Aktion konnte nicht ausgeführt werden weil {0} '{1}' von einem anderen User ausgeliehen ist.",
