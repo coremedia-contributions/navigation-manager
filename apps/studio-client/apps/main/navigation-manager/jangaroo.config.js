@@ -27,14 +27,14 @@ module.exports = jangarooConfig({
       cmCategoryIcons: {
         Innovation: [
           {
-            src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/innovation_24.svg",
+            src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/innovation.svg",
             sizes: "24x24",
             type: "image/svg",
           },
           {
-            src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/innovation_192.png",
+            src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/innovation.svg",
             sizes: "192x192",
-            type: "image/png",
+            type: "image/svg",
           },
         ],
       },
@@ -47,14 +47,14 @@ module.exports = jangarooConfig({
           cmAdministrative: false,
           icons: [
             {
-              src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/navigation_24.svg",
+              src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/navigation.svg",
               sizes: "24x24",
               type: "image/svg",
             },
             {
-              src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/navigation_192.png",
+              src: "packages/com.coremedia.blueprint__navigation-manager-studio/appIcons/navigation.svg",
               sizes: "192x192",
-              type: "image/png",
+              type: "image/svg",
             },
           ],
           cmService: {
