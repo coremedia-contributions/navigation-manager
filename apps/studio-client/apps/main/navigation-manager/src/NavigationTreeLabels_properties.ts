@@ -1,3 +1,8 @@
+import { SvgIconUtil } from "@coremedia/studio-client.base-models";
+import createPageIcon from "./icons/create-type-page.svg";
+import collapseAllIcon from "./icons/collapse-all.svg";
+import expandAllIcon from "./icons/expand-all.svg";
+
 /**
  * Interface values for ResourceBundle "NavigationTreeLabels".
  * @see NavigationTreeLabels_properties#INSTANCE
@@ -12,13 +17,17 @@ interface NavigationTreeLabels_properties {
   /**
    *Action
    */
+  Navigation_action_add_page: string;
+  Navigation_action_add_page_icon: string;
   Navigation_action_show_in_tab: string;
   Navigation_action_show_in_library: string;
   Navigation_action_toggle_hidden_items: string;
   Navigation_action_hide_items: string;
   Navigation_action_create_from_template: string;
   Navigation_action_collapse_all: string;
+  Navigation_action_collapse_all_icon: string;
   Navigation_action_expand_all: string;
+  Navigation_action_expand_all_icon: string;
   PDEOpenNavigationTreeAction_text: string;
   PDEOpenNavigationTreeAction_tooltip: string;
   /**
@@ -57,13 +66,17 @@ const NavigationTreeLabels_properties: NavigationTreeLabels_properties = {
   Navigation_root_suffix: "Navigation",
   Navigation_window_title: "Navigation Manager",
   Navigation_window_tooltip: "Open Navigation Manager",
+  Navigation_action_add_page: "Add Page",
+  Navigation_action_add_page_icon: SvgIconUtil.getIconStyleClassForSvgIcon(createPageIcon),
   Navigation_action_show_in_tab: "Open Item in Tab",
   Navigation_action_show_in_library: "Show Item in Library",
   Navigation_action_toggle_hidden_items: "Show Hidden Navigation Items",
   Navigation_action_hide_items: "Show or Hide Invisible Navigation items",
   Navigation_action_create_from_template: "Create Page from Template",
   Navigation_action_collapse_all: "Collapse All",
+  Navigation_action_collapse_all_icon: SvgIconUtil.getIconStyleClassForSvgIcon(collapseAllIcon),
   Navigation_action_expand_all: "Expand All",
+  Navigation_action_expand_all_icon: SvgIconUtil.getIconStyleClassForSvgIcon(expandAllIcon),
   PDEOpenNavigationTreeAction_text: "Open Navigation Manager",
   PDEOpenNavigationTreeAction_tooltip: "Open Navigation Manager",
   navigation_checkout_error_title: "Error Editing Navigation Tree",

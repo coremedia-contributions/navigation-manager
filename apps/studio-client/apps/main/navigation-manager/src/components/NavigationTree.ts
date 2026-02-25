@@ -25,8 +25,6 @@ import ConfigUtils from "@jangaroo/runtime/ConfigUtils";
 import NavigationTreeLabels_properties from "../NavigationTreeLabels_properties";
 import OpenCreateFromTemplateDialogAction from "../actions/OpenCreateFromTemplateDialogAction";
 import ShowHiddenItemsAction from "../actions/ShowHiddenItemsAction";
-import collapseAllIcon from "../icons/collapse-all.svg";
-import expandAllIcon from "../icons/expand-all.svg";
 import NavigationTreeBase from "./NavigationTreeBase";
 import StatusColumn from "./StatusColumn";
 import TitleColumn from "./TitleColumn";
@@ -123,6 +121,8 @@ class NavigationTree extends NavigationTreeBase {
             items: [
               Config(IconButton, {
                 itemId: "addPageButton",
+                tooltip: NavigationTreeLabels_properties.Navigation_action_add_page,
+                iconCls: NavigationTreeLabels_properties.Navigation_action_add_page_icon,
                 baseAction: new OpenCreateFromTemplateDialogAction({
                   contentValueExpression: this$.getSelectedNavigationValueExpression(),
                 }),
@@ -171,13 +171,13 @@ class NavigationTree extends NavigationTreeBase {
               Config(TbSeparator),
               Config(IconButton, {
                 itemId: NavigationTree.EXPAND_ALL_BUTTON_ITEM_ID,
-                icon: expandAllIcon,
+                iconCls: NavigationTreeLabels_properties.Navigation_action_expand_all_icon,
                 tooltip: NavigationTreeLabels_properties.Navigation_action_expand_all,
                 handler: bind(this$, this$.#handleExpandAll),
               }),
               Config(IconButton, {
                 itemId: NavigationTree.COLLAPSE_ALL_BUTTON_ITEM_ID,
-                icon: collapseAllIcon,
+                iconCls: NavigationTreeLabels_properties.Navigation_action_collapse_all_icon,
                 tooltip: NavigationTreeLabels_properties.Navigation_action_collapse_all,
                 handler: bind(this$, this$.#handleCollapseAll),
               }),
